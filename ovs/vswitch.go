@@ -197,7 +197,15 @@ func (v *VSwitchSetService) Bridge(bridge string, options BridgeOptions) error {
 	_, err := v.v.exec(args...)
 	return err
 }
-
+// BridgeOther allows for setting of non openflow BridgeOptions
+func (v *VSwitchSetService) BridgeOther(bridge string, options string) error {
+        // Prepend command line arguments before expanding options string
+        // and appending it
+        args := []string{"set", "bridge", bridge}
+        args = append(args, options)
+        _, err := v.v.exec(args...)
+        return err
+}
 // An BridgeOptions enables configuration of a bridge.
 type BridgeOptions struct {
 	// Protocols specifies the OpenFlow protocols the bridge should use.
